@@ -1,1 +1,59 @@
+tags:
+  - name: users
+    description: users API
 
+paths:
+  /api/v1/users:
+    # [POST] users
+    post:
+      tags:
+        - users
+      summary: Create User
+      parameters:
+        - name: body
+          in: body
+          description: user Data
+          required: true
+          schema:
+            $ref: '#/definitions/user'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# definitions
+definitions:
+  user:
+    type: object
+    required:
+      - email
+      - firstName
+      - lastName
+    optional:
+      - telephone
+    properties:
+      email:
+        type: string
+        default: 'joedoe@email.com'
+        description: User's email
+      firstName:
+        type: string
+        default: 'Joe'
+        description: User's fist name
+      lastName:
+        type: string
+        default: 'Doe'
+        description: User's last name
+      telephone:
+        type: number
+        default: '6900000000'
+        description: User's telephone number
+
+schemes:
+  - https
+  - http

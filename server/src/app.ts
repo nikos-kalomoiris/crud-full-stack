@@ -4,6 +4,7 @@ import { NODE_ENV, PORT } from './config';
 import { Routes } from './interfaces/routes.interface';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import errorMiddleware from './middlewares/error.middleware';
 
 class App {
   public app: express.Application;
@@ -18,10 +19,12 @@ class App {
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeSwagger();
+    this.initializeErrorHandlingMiddleware();
   }
 
   public listen() {
     this.app.listen(this.port, () => {
+      //TODO: Create custom logger
       console.log(`=================================`);
       console.log(`======= ENV: ${this.env} =======`);
       console.log(`App listening on the port ${this.port}`);
@@ -39,9 +42,13 @@ class App {
     this.app.use(express.urlencoded({ extended: true }));
   }
 
+  private initializeErrorHandlingMiddleware() {
+    this.app.use(errorMiddleware);
+  }
+
   private initializeRoutes(routes: Routes[]) {
     routes.forEach((route) => {
-      this.app.use('/', route.router);
+      this.app.use('/api/v1/', route.router);
     });
   }
 
