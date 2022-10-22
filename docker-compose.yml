@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  express-app:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+    container_name: express-app
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ./src:/server/src
+    working_dir: /server
+    command: npm run dev
