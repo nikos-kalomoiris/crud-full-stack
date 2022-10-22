@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsInt, IsOptional } from 'class-validator';
+import { IsEmail, IsString, IsInt, IsOptional, Length } from 'class-validator';
 
 // TODO: Create custom trim decorator
 export class UserDto {
