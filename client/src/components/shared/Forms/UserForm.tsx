@@ -1,16 +1,17 @@
-import React, { FC } from "react";
-import { Button, TextField, Box } from "@mui/material";
-import { useFormik } from "formik";
-import { User } from "../../../interfaces/user.interface";
-import "./UserForm.css";
+import React, { FC } from 'react';
+import { Button, TextField, Box } from '@mui/material';
+import { useFormik } from 'formik';
+import { User } from '../../../interfaces/user.interface';
+import './UserForm.css';
+import { emptyUser } from '../../../utils/constants';
 
 interface Props {
-  type: "create" | "edit";
-  userData: User;
+  type: 'create' | 'edit' | 'delete';
+  userData?: User;
   handleModalOpen: () => void;
 }
 
-const UserForm: FC<Props> = ({ type, userData, handleModalOpen }) => {
+const UserForm: FC<Props> = ({ type, userData = emptyUser, handleModalOpen }) => {
   const formik = useFormik({
     initialValues: {
       firstName: userData.firstName,
@@ -29,7 +30,7 @@ const UserForm: FC<Props> = ({ type, userData, handleModalOpen }) => {
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { my: 2 },
+          '& .MuiTextField-root': { my: 2 },
         }}
       >
         <TextField
@@ -74,21 +75,11 @@ const UserForm: FC<Props> = ({ type, userData, handleModalOpen }) => {
         />
       </Box>
       <div className="buttons-container">
-        <Button
-          variant="contained"
-          color="error"
-          onClick={handleModalOpen}
-          className="button"
-        >
+        <Button variant="contained" color="error" onClick={handleModalOpen} className="button">
           Cancel
         </Button>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className="button"
-        >
-          {type === "create" ? "Create" : "Edit"}
+        <Button type="submit" variant="contained" color="primary" className="button">
+          {type === 'create' ? 'Create' : 'Save'}
         </Button>
       </div>
     </form>

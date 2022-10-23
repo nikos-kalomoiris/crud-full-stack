@@ -1,8 +1,8 @@
-import React, { FC } from "react";
-import { Box, IconButton } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
-import "./Actions.css";
-import EditModal from "../../shared/Modals/EditModal";
+import React, { FC } from 'react';
+import { Box, IconButton } from '@mui/material';
+import { Edit, Delete } from '@mui/icons-material';
+import './Actions.css';
+import UserFormModal from '../../shared/Modals/UserModal';
 
 interface Props {
   params: any;
@@ -11,19 +11,21 @@ interface Props {
 }
 
 const Actions: FC<Props> = ({ params, rowId, setRowId }) => {
-  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+  const [isUserModalOpen, setIsUserModalOpen] = React.useState<boolean>(false);
+  const [modalType, setModalType] = React.useState<'create' | 'edit' | 'delete'>('create');
 
-  const handleModalOpen = () => {
-    setIsModalOpen(!isModalOpen);
+  const handleUserModalOpen = () => {
+    setIsUserModalOpen(!isUserModalOpen);
   };
 
   const handleEdit = () => {
-    handleModalOpen();
-    console.log("edit");
+    handleUserModalOpen();
+    setModalType('edit');
   };
 
   const handleDelete = () => {
-    console.log("delete");
+    handleUserModalOpen();
+    setModalType('delete');
   };
 
   return (
@@ -32,20 +34,11 @@ const Actions: FC<Props> = ({ params, rowId, setRowId }) => {
         <IconButton aria-label="edit" size="small" onClick={handleEdit}>
           <Edit />
         </IconButton>
-        <IconButton
-          aria-label="edit"
-          size="small"
-          color="error"
-          onClick={handleDelete}
-        >
+        <IconButton aria-label="edit" size="small" color="error" onClick={handleDelete}>
           <Delete />
         </IconButton>
       </Box>
-      <EditModal
-        isModalOpen={isModalOpen}
-        handleModalOpen={handleModalOpen}
-        userData={params.row}
-      />
+      <UserFormModal isModalOpen={isUserModalOpen} handleModalOpen={handleUserModalOpen} userData={params.row} type={modalType} />
     </>
   );
 };

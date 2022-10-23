@@ -1,0 +1,7 @@
+.delete-modal-contents-container {
+  @apply my-2;
+}
+
+.text-highlights {
+  @apply text-red-500 font-bold;
+}

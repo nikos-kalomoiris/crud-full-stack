@@ -1,14 +1,23 @@
+import { User } from '../interfaces/user.interface';
+
 export const appData = Object.freeze({
   APP_NAV_LINKS: [
     {
-      id: "#home",
-      label: "Home",
-      path: "/",
+      id: '#home',
+      label: 'Home',
+      path: '/',
     },
     {
-      id: "#about",
-      label: "About",
-      path: "/about",
+      id: '#about',
+      label: 'About',
+      path: '/about',
     },
   ],
+});
+
+export const emptyUser: User = Object.freeze({
+  firstName: '',
+  lastName: '',
+  email: '',
+  telephone: '',
 });
