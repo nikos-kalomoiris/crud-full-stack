@@ -1,0 +1,11 @@
+.user-dashboard-container {
+  @apply mt-20;
+}
+
+.card-container {
+  @apply p-8 my-6;
+}
+
+.table-container {
+  @apply h-[50vh];
+}
