@@ -6,12 +6,15 @@ import { User } from '../interfaces/user.interface';
 import UsersTable from '../components/UsersDashboard/UsersTable/UsersTable';
 import { Add } from '@mui/icons-material';
 import UserFormModal from '../components/shared/Modals/UserModal';
-import { emptyUser } from '../utils/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setUsers } from '../redux/slices/UsersSlice';
 
 interface Props {}
 
 const UsersDashboard: FC<Props> = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const dispatch = useDispatch();
+  const users: User[] = useSelector((state: RootState) => state.users.users);
   const [loading, setLoading] = useState<boolean>(false);
   const [createUserModalIsOpen, setCreateUserModalIsOpen] = useState<boolean>(false);
 
@@ -24,7 +27,7 @@ const UsersDashboard: FC<Props> = () => {
       try {
         setLoading(true);
         const users = await getUsers();
-        setUsers(users);
+        dispatch(setUsers(users));
         setLoading(false);
       } catch (error) {
         console.log(error);

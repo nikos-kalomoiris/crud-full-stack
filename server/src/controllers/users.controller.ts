@@ -101,7 +101,7 @@ class UsersController {
         },
       });
 
-      return res.status(200).json({ message: 'User with id:' + deleteUser.id + ' deleted successfully' });
+      return res.status(200).json({ id: userId, message: 'User deleted successfully' });
     } catch (error) {
       next(error);
     }
