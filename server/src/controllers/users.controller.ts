@@ -71,7 +71,7 @@ class UsersController {
         },
       });
 
-      res.status(200).json({ data: updateUser, message: 'updated' });
+      res.status(200).json({ data: updateUser, message: 'User updated successfully' });
     } catch (error) {
       next(error);
     }

@@ -20,11 +20,24 @@ export const getUsers = async () => {
 };
 
 export const createUser = async (user: User) => {
-  return await backendApi.post('/users', user);
+  try {
+    const { data } = await backendApi.post('/users', user);
+    successToast(data.message);
+    return data.data;
+  } catch (error) {
+    errorToast('Error creating user');
+  }
 };
 
 export const updateUser = async (id: string, data: User) => {
-  return await backendApi.put(`/users/${id}`, data);
+  try {
+    const { data: updatedUser } = await backendApi.put(`/users/${id}`, data);
+    successToast(updatedUser.message);
+    return updatedUser.data;
+  } catch (error) {
+    errorToast('Error updating user');
+  }
+  return;
 };
 
 export const deleteUser = async (id: string) => {

@@ -10,7 +10,7 @@ export const successToast = (message: string) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    theme: 'colored',
+    theme: 'light',
   });
 };
 
@@ -23,6 +23,6 @@ export const errorToast = (error: string) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
-    theme: 'colored',
+    theme: 'light',
   });
 };

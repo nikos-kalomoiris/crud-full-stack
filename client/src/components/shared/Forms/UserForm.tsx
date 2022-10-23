@@ -4,6 +4,10 @@ import { useFormik } from 'formik';
 import { User } from '../../../interfaces/user.interface';
 import './UserForm.css';
 import { emptyUser } from '../../../utils/constants';
+import { UserSchema } from '../../../validationSchemas/user.validationSchema';
+import { createUser, updateUser } from '../../../api/backend.api';
+import { useDispatch } from 'react-redux';
+import { addUser, alterUser } from '../../../redux/slices/UsersSlice';
 
 interface Props {
   type: 'create' | 'edit' | 'delete';
@@ -12,6 +16,23 @@ interface Props {
 }
 
 const UserForm: FC<Props> = ({ type, userData = emptyUser, handleModalOpen }) => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (values: User) => {
+    switch (type) {
+      case 'create':
+        const newUser = await createUser(values);
+        dispatch(addUser(newUser));
+        break;
+      case 'edit':
+        if (userData && userData.id) {
+          const updatedUser = await updateUser(userData.id, values);
+          dispatch(alterUser(updatedUser));
+        }
+        break;
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       firstName: userData.firstName,
@@ -19,9 +40,14 @@ const UserForm: FC<Props> = ({ type, userData = emptyUser, handleModalOpen }) =>
       email: userData.email,
       telephone: userData.telephone,
     },
-    onSubmit: (values) => {
-      console.log(type);
-      alert(JSON.stringify(values, null, 2));
+    validationSchema: UserSchema,
+    onSubmit: async (values) => {
+      try {
+        await handleSubmit(values);
+        handleModalOpen();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
