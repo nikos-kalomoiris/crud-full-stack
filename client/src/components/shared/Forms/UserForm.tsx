@@ -101,7 +101,7 @@ const UserForm: FC<Props> = ({ type, userData = emptyUser, handleModalOpen }) =>
         />
       </Box>
       <div className="buttons-container">
-        <Button variant="contained" color="error" onClick={handleModalOpen} className="button">
+        <Button variant="contained" color="inherit" onClick={handleModalOpen} className="button">
           Cancel
         </Button>
         <Button type="submit" variant="contained" color="primary" className="button">

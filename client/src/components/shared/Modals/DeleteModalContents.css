@@ -5,3 +5,7 @@
 .text-highlights {
   @apply text-red-500 font-bold;
 }
+
+.buttons-container {
+  @apply mt-3;
+}

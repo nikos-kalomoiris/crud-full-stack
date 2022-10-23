@@ -33,10 +33,10 @@ const DeleteModalContents: FC<Props> = ({ userData, handleModalOpen }) => {
         with email <span className="text-highlights">{userData?.email}</span>?
       </Typography>
       <div className="buttons-container">
-        <Button variant="contained" color="error" onClick={handleModalOpen} className="button">
+        <Button variant="contained" color="inherit" onClick={handleModalOpen} className="button">
           Cancel
         </Button>
-        <Button type="submit" variant="contained" color="primary" className="button" onClick={handleDelete}>
+        <Button type="submit" variant="contained" color="error" className="button" onClick={handleDelete}>
           Delete
         </Button>
       </div>
