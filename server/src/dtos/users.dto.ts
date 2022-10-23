@@ -1,6 +1,7 @@
-import { IsEmail, IsString, IsInt, IsOptional, Length } from 'class-validator';
+import { IsEmail, IsString, IsInt, IsOptional } from 'class-validator';
 
 // TODO: Create custom trim decorator
+// TODO: Add UpdatedAt and CreatedAt
 export class UserDto {
   @IsString()
   @IsEmail()
@@ -12,7 +13,7 @@ export class UserDto {
   @IsString()
   public lastName: string;
 
-  @IsInt()
+  @IsString()
   @IsOptional()
-  public telephone?: number;
+  public telephone?: string;
 }

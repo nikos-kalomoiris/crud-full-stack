@@ -110,7 +110,7 @@ definitions:
         default: 'Doe'
         description: User's last name
       telephone:
-        type: number
+        type: string
         default: '6900000000'
         description: User's telephone number
 
