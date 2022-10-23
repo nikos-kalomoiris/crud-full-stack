@@ -1,0 +1,7 @@
+.buttons-container {
+  @apply flex justify-end space-x-4;
+}
+
+.button {
+  @apply w-32;
+}

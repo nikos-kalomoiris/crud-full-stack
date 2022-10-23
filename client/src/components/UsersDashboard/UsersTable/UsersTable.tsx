@@ -1,7 +1,4 @@
 import React, { FC, useMemo } from "react";
-import { Box, IconButton } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
-import "./Actions.css";
 import { User } from "../../../interfaces/user.interface";
 import { DataGrid } from "@mui/x-data-grid/DataGrid";
 import Actions from "./Actions";
@@ -15,19 +12,20 @@ const UsersTable: FC<Props> = ({ users }) => {
 
   const columns = useMemo(
     () => [
-      { field: "id", headerName: "ID", width: 200 },
-      { field: "firstName", headerName: "First name", width: 150 },
-      { field: "lastName", headerName: "Last name", width: 150 },
-      { field: "email", headerName: "Email", width: 150 },
-      { field: "telephone", headerName: "Phone", width: 150 },
+      { field: "id", headerName: "ID", minWidth: 250 },
+      { field: "firstName", headerName: "First name", minWidth: 150, flex: 1 },
+      { field: "lastName", headerName: "Last name", minWidth: 150, flex: 1 },
+      { field: "email", headerName: "Email", minWidth: 150, flex: 1 },
+      { field: "telephone", headerName: "Phone", minWidth: 150, flex: 1 },
       {
         field: "actions",
         headerName: "Actions",
         type: "actions",
-        width: 150,
+        minWidth: 150,
         renderCell: (params: any) => (
           <Actions params={params} rowId={rowId} setRowId={setRowId} />
         ),
+        flex: 1,
       },
     ],
     [rowId]
@@ -37,7 +35,7 @@ const UsersTable: FC<Props> = ({ users }) => {
     <DataGrid
       rows={users}
       columns={columns}
-      pageSize={6}
+      pageSize={10}
       rowsPerPageOptions={[6]}
     />
   );
