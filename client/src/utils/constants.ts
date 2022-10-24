@@ -7,11 +7,6 @@ export const appData = Object.freeze({
       label: 'Home',
       path: '/',
     },
-    {
-      id: '#about',
-      label: 'About',
-      path: '/about',
-    },
   ],
 });
 
