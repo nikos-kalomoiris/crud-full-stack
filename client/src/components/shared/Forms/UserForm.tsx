@@ -42,12 +42,8 @@ const UserForm: FC<Props> = ({ type, userData = emptyUser, handleModalOpen }) =>
     },
     validationSchema: UserSchema,
     onSubmit: async (values) => {
-      try {
-        await handleSubmit(values);
-        handleModalOpen();
-      } catch (error) {
-        console.log(error);
-      }
+      handleSubmit(values);
+      handleModalOpen();
     },
   });
 

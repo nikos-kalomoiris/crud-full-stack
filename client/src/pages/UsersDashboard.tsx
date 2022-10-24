@@ -24,14 +24,10 @@ const UsersDashboard: FC<Props> = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      try {
-        setLoading(true);
-        const users = await getUsers();
-        dispatch(setUsers(users));
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
+      setLoading(true);
+      const users = await getUsers();
+      dispatch(setUsers(users));
+      setLoading(false);
     };
 
     fetchUsers();
