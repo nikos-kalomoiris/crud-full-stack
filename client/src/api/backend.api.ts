@@ -25,7 +25,7 @@ export const createUser = async (user: User) => {
     successToast(data.message);
     return data.data;
   } catch (error) {
-    errorToast('Error creating user');
+    throw error;
   }
 };
 
@@ -35,7 +35,7 @@ export const updateUser = async (id: string, data: User) => {
     successToast(updatedUser.message);
     return updatedUser.data;
   } catch (error) {
-    errorToast('Error updating user');
+    throw error;
   }
   return;
 };

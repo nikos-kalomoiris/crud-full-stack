@@ -10,7 +10,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      - DATABASE_URL=mongodb://root:123456@db:27018/crud
+      - DATABASE_URL=mongodb://db:27017/crud
       - PORT=8080
 
   client:
@@ -28,18 +28,6 @@ services:
       - 27017:27017
     volumes:
       - ./db:/data/db
-    networks:
-      - mongodb-cluster
-
-  mongo:
-    build: ./mongodb-replica
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 123456
-      MONGO_REPLICA_HOST: localhost
-      MONGO_REPLICA_PORT: 27018
-    ports:
-      - "27018:27018"
 
 volumes:
   db:

@@ -8,6 +8,7 @@ import { UserSchema } from '../../../validationSchemas/user.validationSchema';
 import { createUser, updateUser } from '../../../api/backend.api';
 import { useDispatch } from 'react-redux';
 import { addUser, alterUser } from '../../../redux/slices/UsersSlice';
+import { errorToast } from '../../../utils/toast';
 
 interface Props {
   type: 'create' | 'edit' | 'delete';
@@ -21,14 +22,21 @@ const UserForm: FC<Props> = ({ type, userData = emptyUser, handleModalOpen }) =>
   const handleSubmit = async (values: User) => {
     switch (type) {
       case 'create':
-        const newUser = await createUser(values);
-        dispatch(addUser(newUser));
+        try {
+          const newUser = await createUser(values);
+          dispatch(addUser(newUser));
+        } catch (error: any) {
+          errorToast(error.response.data.message);
+        }
         break;
       case 'edit':
         if (userData && userData._id) {
-          const updatedUser = await updateUser(userData._id, values);
-          console.log(updatedUser);
-          dispatch(alterUser(updatedUser));
+          try {
+            const updatedUser = await updateUser(userData._id, values);
+            dispatch(alterUser(updatedUser));
+          } catch (error: any) {
+            errorToast(error.response.data.message);
+          }
         }
         break;
     }
