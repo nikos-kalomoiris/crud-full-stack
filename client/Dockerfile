@@ -1,4 +1,3 @@
-# Declare the base image
 FROM node:lts-alpine3.15
 
 WORKDIR /app
