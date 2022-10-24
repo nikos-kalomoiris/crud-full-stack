@@ -25,8 +25,9 @@ const UserForm: FC<Props> = ({ type, userData = emptyUser, handleModalOpen }) =>
         dispatch(addUser(newUser));
         break;
       case 'edit':
-        if (userData && userData.id) {
-          const updatedUser = await updateUser(userData.id, values);
+        if (userData && userData._id) {
+          const updatedUser = await updateUser(userData._id, values);
+          console.log(updatedUser);
           dispatch(alterUser(updatedUser));
         }
         break;

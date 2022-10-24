@@ -5,6 +5,7 @@ import { Routes } from './interfaces/routes.interface';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import errorMiddleware from './middlewares/error.middleware';
+import { connect } from 'mongoose';
 
 class App {
   public app: express.Application;
@@ -14,8 +15,9 @@ class App {
   constructor(routes: Routes[]) {
     this.app = express();
     this.env = NODE_ENV || 'development';
-    this.port = PORT || 3000;
+    this.port = PORT || 8080;
 
+    this.initializeDatabaseConnection();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeSwagger();
@@ -44,6 +46,16 @@ class App {
 
   private initializeErrorHandlingMiddleware() {
     this.app.use(errorMiddleware);
+  }
+
+  private initializeDatabaseConnection() {
+    connect(process.env.DATABASE_URL, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Connected to database');
+      }
+    });
   }
 
   private initializeRoutes(routes: Routes[]) {

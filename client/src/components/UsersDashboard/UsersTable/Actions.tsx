@@ -6,11 +6,9 @@ import UserFormModal from '../../shared/Modals/UserModal';
 
 interface Props {
   params: any;
-  rowId: string;
-  setRowId: (rowId: string) => void;
 }
 
-const Actions: FC<Props> = ({ params, rowId, setRowId }) => {
+const Actions: FC<Props> = ({ params }) => {
   const [isUserModalOpen, setIsUserModalOpen] = React.useState<boolean>(false);
   const [modalType, setModalType] = React.useState<'create' | 'edit' | 'delete'>('create');
 

@@ -2,8 +2,14 @@ FROM node:16 as build
 
 WORKDIR /server
 
-COPY ./server/package*.json /server/
+COPY package*.json ./
 
-RUN npm i
+COPY prisma ./prisma
 
-COPY ./server /server
+RUN npm install
+
+RUN npx prisma generate
+
+COPY . .
+
+CMD ["npm", "run", "dev"]

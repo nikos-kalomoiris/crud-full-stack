@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
-import { Prisma } from '../db';
 import { UserDto } from '../dtos/users.dto';
 import { isString } from 'class-validator';
 import { ObjectId } from 'mongodb';
 import { HttpException } from '../exceptions/HttpException';
+import userModel from '../models/users.model';
 
 class UsersController {
-  private prisma = Prisma.getInstance();
+  public users = userModel;
 
   public getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const users = await this.prisma.users.findMany();
+      const users = await this.users.find();
       res.status(200).json({ data: users });
     } catch (error) {
       next(error);
@@ -21,23 +21,19 @@ class UsersController {
     try {
       const newUser: UserDto = req.body;
 
-      const userExists = await this.prisma.users.findUnique({
-        where: {
-          email: newUser.email,
-        },
+      const userExists = await this.users.findOne({
+        email: newUser.email,
       });
 
       if (userExists) {
         throw new HttpException(409, 'User already exists');
       }
 
-      const createUser = await this.prisma.users.create({
-        data: {
-          ...newUser,
-        },
+      const createUser = await this.users.create({
+        ...newUser,
       });
 
-      return res.status(201).send({ data: createUser, message: 'created' });
+      return res.status(201).send({ data: createUser, message: 'User created successfully' });
     } catch (error) {
       next(error);
     }
@@ -52,26 +48,17 @@ class UsersController {
         throw new HttpException(400, 'Invalid user id');
       }
 
-      const userExists = await this.prisma.users.findUnique({
-        where: {
-          id: userId,
-        },
+      const userExists = await this.users.findOne({
+        email: userData.email,
       });
 
-      if (!userExists) {
+      if (userExists && userExists._id.toString() !== userId) {
         throw new HttpException(409, 'User does not exist');
       }
 
-      const updateUser = await this.prisma.users.update({
-        where: {
-          id: userId,
-        },
-        data: {
-          ...userData,
-        },
-      });
+      await this.users.findByIdAndUpdate(userId, { ...userData });
 
-      res.status(200).json({ data: updateUser, message: 'User updated successfully' });
+      res.status(200).json({ data: { _id: userId, ...userData }, message: 'User updated successfully' });
     } catch (error) {
       next(error);
     }
@@ -85,21 +72,10 @@ class UsersController {
         throw new HttpException(400, 'Invalid id');
       }
 
-      const userExists = await this.prisma.users.findUnique({
-        where: {
-          id: userId,
-        },
-      });
-
-      if (!userExists) {
+      const deleteUser = await this.users.findByIdAndDelete(userId);
+      if (!deleteUser) {
         throw new HttpException(409, 'User does not exist');
       }
-
-      const deleteUser = await this.prisma.users.delete({
-        where: {
-          id: userId,
-        },
-      });
 
       return res.status(200).json({ id: userId, message: 'User deleted successfully' });
     } catch (error) {

@@ -22,11 +22,11 @@ export const userSlice = createSlice({
       state.users.push(action.payload);
     },
     removeUser: (state, action) => {
-      state.users = state.users.filter((user) => user.id !== action.payload);
+      state.users = state.users.filter((user) => user._id !== action.payload);
     },
     alterUser: (state, action) => {
       const data = action.payload;
-      const userIndex = state.users.findIndex((user) => user.id === data.id);
+      const userIndex = state.users.findIndex((user) => user._id === data._id);
       state.users[userIndex] = data;
     },
   },

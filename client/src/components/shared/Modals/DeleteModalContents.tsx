@@ -16,9 +16,9 @@ const DeleteModalContents: FC<Props> = ({ userData, handleModalOpen }) => {
   const dispatch = useDispatch();
 
   const handleDelete = async () => {
-    if (userData && userData.id) {
-      await deleteUser(userData.id);
-      dispatch(removeUser(userData.id));
+    if (userData && userData._id) {
+      await deleteUser(userData._id);
+      dispatch(removeUser(userData._id));
       handleModalOpen();
     }
   };
